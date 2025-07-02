@@ -355,12 +355,12 @@ section {
     padding: 2rem;
     margin-bottom: 2rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #000;
     transition: all 0.3s ease;
+    border: 1px solid #e5e5e5;
 }
 
 .experience-item:hover {
-    transform: translateX(5px);
+    transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -369,6 +369,19 @@ section {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 .company-name {
@@ -397,6 +410,19 @@ section {
     color: #666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+.achievements {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.achievements li {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
 }
 
 .tech-stack {
@@ -543,6 +569,11 @@ section {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+
+    .company-logo {
+        width: 48px;
+        height: 48px;
     }
 
     .footer-content {

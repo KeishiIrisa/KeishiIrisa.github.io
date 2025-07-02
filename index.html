@@ -26,14 +26,15 @@
     <link rel="stylesheet" href="./styles/main.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="icon" type="image/jpeg" href="./casual.jpg">
+    <link rel="apple-touch-icon" href="./casual.jpg">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#hero" data-i18n="nav.name">入佐啓士</a>
+                <a href="#hero" data-i18n="nav.name">Keishi Irisa</a>
             </div>
             <div class="nav-menu" id="nav-menu">
                 <a href="#about" class="nav-link" data-i18n="nav.about">について</a>
@@ -149,17 +150,41 @@
         <div class="container">
             <h2 class="section-title" data-i18n="experience.title">インターンシップ経験</h2>
             <div class="experience-timeline">
+                <!-- LINEヤフー (Current) -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <img src="./assets/images/lineyahoo.png" alt="LY Corp." class="company-logo">
+                            <h3 class="company-name">LINEヤフー</h3>
+                        </div>
+                        <span class="period" data-i18n="experience.line2025.period">2025年8月 - 現在</span>
+                    </div>
+                    <p class="role" data-i18n="experience.line2025.role">バックエンドエンジニア　インターン</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.line2025.achievement1">LINEスタンプ・テーマ・絵文字のバックエンド開発</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">Armeria</span>
+                        <span class="tech-tag">RxJava</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Apache Kafka</span>
+                        <span class="tech-tag">Nginx</span>
+                    </div>
+                </div>
                 <!-- EMUNI -->
                 <div class="experience-item">
                     <div class="experience-header">
-                        <h3 class="company-name">EMUNI</h3>
+                        <div class="company-info">
+                            <img src="./assets/images/emuni.png" alt="EMUNI" class="company-logo">
+                            <h3 class="company-name">EMUNI</h3>
+                        </div>
                         <span class="period" data-i18n="experience.emuni.period">2025年1月 - 現在</span>
                     </div>
                     <p class="role" data-i18n="experience.emuni.role">ソフトウェアエンジニア インターン</p>
                     <ul class="achievements">
-                        <li data-i18n="experience.emuni.achievement1">16万人の利用を想定した教育機関向け生成AIチャットアプリのバックエンド・フロントエンド開発</li>
-                        <li data-i18n="experience.emuni.achievement2">ユーザーの役割や所属グループに応じたUXの最適化を実現</li>
-                        <li data-i18n="experience.emuni.achievement3">AIモデルとシステムプロンプトの切り替え機能により回答精度を向上</li>
+                        <li data-i18n="experience.emuni.achievement1">高トラフィックマルチテナントを想定した生成AIチャットアプリのバックエンド・フロントエンド開発</li>
                     </ul>
                     <div class="tech-stack">
                         <span class="tech-tag">Python</span>
@@ -174,15 +199,15 @@
                 <!-- Cookpad -->
                 <div class="experience-item">
                     <div class="experience-header">
-                        <h3 class="company-name">Cookpad</h3>
+                        <div class="company-info">
+                            <img src="./assets/images/cookpad.png" alt="Cookpad" class="company-logo">
+                            <h3 class="company-name">Cookpad</h3>
+                        </div>
                         <span class="period" data-i18n="experience.cookpad.period">2025年2月 - 2025年3月</span>
                     </div>
                     <p class="role" data-i18n="experience.cookpad.role">サーチエンジニア インターン</p>
                     <ul class="achievements">
-                        <li data-i18n="experience.cookpad.achievement1">検索のブロッキングパイプラインを再構築し、不適切なクエリ検出率を10%向上</li>
-                        <li data-i18n="experience.cookpad.achievement2">バングラデシュのコミュニティマネージャーからのフィードバックをもとに辞書アプリのバグを修正</li>
                         <li data-i18n="experience.cookpad.achievement3">検索APIの改良とCronタスクの最適化により自動補完機能を強化</li>
-                        <li data-i18n="experience.cookpad.achievement4">イギリスチームとの英語での議論を通じてプロジェクトを推進</li>
                     </ul>
                     <div class="tech-stack">
                         <span class="tech-tag">Python</span>
@@ -196,29 +221,18 @@
                     </div>
                 </div>
 
-                <!-- LINEヤフー (Current) -->
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <h3 class="company-name">LINEヤフー</h3>
-                        <span class="period" data-i18n="experience.line2025.period">2025年8月 - 2025年10月</span>
-                    </div>
-                    <p class="role" data-i18n="experience.line2025.role">バックエンド開発者</p>
-                    <ul class="achievements">
-                        <li data-i18n="experience.line2025.achievement1">LINEスタンプ、テーマ、絵文字のバックエンド開発</li>
-                    </ul>
-                </div>
-
                 <!-- LINEヤフー (2024) -->
                 <div class="experience-item">
                     <div class="experience-header">
-                        <h3 class="company-name">LINEヤフー</h3>
-                        <span class="period" data-i18n="experience.line2024.period">2024年8月 (2週間)</span>
+                        <div class="company-info">
+                            <img src="./assets/images/lineyahoo.png" alt="LY Corp." class="company-logo">
+                            <h3 class="company-name">LINEヤフー</h3>
+                        </div>
+                        <span class="period" data-i18n="experience.line2024.period">2024年8月</span>
                     </div>
                     <p class="role" data-i18n="experience.line2024.role">ソフトウェアエンジニア インターン</p>
                     <ul class="achievements">
                         <li data-i18n="experience.line2024.achievement1">社内マーケターからのフィードバックに基づき広告管理ツールに新機能を実装</li>
-                        <li data-i18n="experience.line2024.achievement2">1on1ミーティングを通じてプロジェクトマネジメントとリーダーシップスキルを習得</li>
-                        <li data-i18n="experience.line2024.achievement3">スクラム開発環境でスプリントを完遂</li>
                     </ul>
                     <div class="tech-stack">
                         <span class="tech-tag">Java</span>
@@ -232,15 +246,15 @@
                 <!-- Kotonoha AI -->
                 <div class="experience-item">
                     <div class="experience-header">
-                        <h3 class="company-name">Kotonoha AI</h3>
+                        <div class="company-info">
+                            <img src="./assets/images/kotonoha.png" alt="Kotonoha AI" class="company-logo">
+                            <h3 class="company-name">Kotonoha AI</h3>
+                        </div>
                         <span class="period" data-i18n="experience.kotonoha.period">2023年7月 - 2024年4月</span>
                     </div>
                     <p class="role" data-i18n="experience.kotonoha.role">共同創業者 | 営業・モバイルアプリ開発</p>
                     <ul class="achievements">
                         <li data-i18n="experience.kotonoha.achievement1">自動採点・添削ツールと英語添削アプリを開発・営業</li>
-                        <li data-i18n="experience.kotonoha.achievement2">主要5社および10校以上の学習塾との交渉を実施</li>
-                        <li data-i18n="experience.kotonoha.achievement3">約150人の中高生を対象に2か月間の授業導入を成功</li>
-                        <li data-i18n="experience.kotonoha.achievement4">モバイルアプリを開発・公開し、6か月で1,000件超のダウンロードと約100人の有料ユーザーを獲得</li>
                     </ul>
                     <div class="tech-stack">
                         <span class="tech-tag">FlutterFlow</span>
