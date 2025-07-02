@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta.title">入佐啓士 | ポートフォリオ</title>
+    <meta name="description" data-i18n="meta.description" content="東京大学工学部化学生命工学科3年生のポートフォリオサイト">
+    <meta name="keywords" content="Keishi Irisa, Portfolio, Software Engineer, University of Tokyo, 入佐啓士">
+    <meta name="author" content="Keishi Irisa">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" data-i18n="meta.title" content="入佐啓士 | ポートフォリオ">
+    <meta property="og:description" data-i18n="meta.description" content="東京大学工学部化学生命工学科3年生のポートフォリオサイト">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./casual.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#hero" data-i18n="nav.name">入佐啓士</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link" data-i18n="nav.about">について</a>
+                <a href="#projects" class="nav-link" data-i18n="nav.projects">プロジェクト</a>
+                <a href="#experience" class="nav-link" data-i18n="nav.experience">経験</a>
+                <a href="#certifications" class="nav-link" data-i18n="nav.certifications">資格</a>
+                <div class="language-switch">
+                    <button id="lang-btn" class="lang-btn">
+                        <span id="lang-text">EN</span>
+                    </button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="./casual.jpg" alt="Keishi Irisa" class="profile-img">
+                </div>
+                <h1 class="hero-name">
+                    <span data-i18n="hero.name">入佐啓士</span>
+                    <span class="hero-name-en">Keishi Irisa</span>
+                </h1>
+                <p class="hero-title" data-i18n="hero.title">化学生命工学科学生</p>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">東京大学工学部 3年</p>
+                <div class="hero-social">
+                    <a href="https://www.linkedin.com/in/keishi-irisa/" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/KeishiIrisa" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="hero-cta">
+                    <a href="#about" class="cta-btn" data-i18n="hero.cta">詳しく見る</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.title">について</h2>
+            <div class="about-content">
+                <p data-i18n="about.description">
+                    東京大学工学部化学生命工学科で学ぶ3年生です。AI技術とWebエンジニアリングに情熱を注いでおり、これまでに複数のスタートアップや大手企業でのインターンシップを通じて実践的な経験を積んできました。特に教育技術と検索エンジニアリングの分野で、ユーザー体験を向上させるソリューションの開発に取り組んでいます。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title" data-i18n="projects.title">プロジェクト</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title" data-i18n="projects.project1.title">PDF Quiz Maker</h3>
+                        <a href="https://github.com/KeishiIrisa/pdf-quiz-maker-backend" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <p class="project-description" data-i18n="projects.project1.description">
+                        提供されたPDF教科書と指定された学習内容に基づいて、質問、回答、説明、出典を生成するAPI。ローカルリソースをAI駆動学習のためのデジタルツールに変換します。
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">LlamaIndex</span>
+                        <span class="tech-tag">OpenAI</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title" data-i18n="projects.project2.title">Auto Press Release & Podcasts Generator</h3>
+                        <a href="https://github.com/KeishiIrisa/prtimes-hackathon-be-podcast" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <p class="project-description" data-i18n="projects.project2.description">
+                        地元企業がコンテンツを簡単に作成・共有できるアプリ。SNS投稿からプレスリリースを自動生成し、ポッドキャストに変換することで、企業の可視性とリーチを向上させます。
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">AI/ML</span>
+                        <span class="tech-tag">Text-to-Speech</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title" data-i18n="experience.title">インターンシップ経験</h2>
+            <div class="experience-timeline">
+                <!-- EMUNI -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="company-name">EMUNI</h3>
+                        <span class="period" data-i18n="experience.emuni.period">2025年1月 - 現在</span>
+                    </div>
+                    <p class="role" data-i18n="experience.emuni.role">ソフトウェアエンジニア インターン</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.emuni.achievement1">16万人の利用を想定した教育機関向け生成AIチャットアプリのバックエンド・フロントエンド開発</li>
+                        <li data-i18n="experience.emuni.achievement2">ユーザーの役割や所属グループに応じたUXの最適化を実現</li>
+                        <li data-i18n="experience.emuni.achievement3">AIモデルとシステムプロンプトの切り替え機能により回答精度を向上</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Azure</span>
+                        <span class="tech-tag">Bedrock</span>
+                    </div>
+                </div>
+
+                <!-- Cookpad -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="company-name">Cookpad</h3>
+                        <span class="period" data-i18n="experience.cookpad.period">2025年2月 - 2025年3月</span>
+                    </div>
+                    <p class="role" data-i18n="experience.cookpad.role">サーチエンジニア インターン</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.cookpad.achievement1">検索のブロッキングパイプラインを再構築し、不適切なクエリ検出率を10%向上</li>
+                        <li data-i18n="experience.cookpad.achievement2">バングラデシュのコミュニティマネージャーからのフィードバックをもとに辞書アプリのバグを修正</li>
+                        <li data-i18n="experience.cookpad.achievement3">検索APIの改良とCronタスクの最適化により自動補完機能を強化</li>
+                        <li data-i18n="experience.cookpad.achievement4">イギリスチームとの英語での議論を通じてプロジェクトを推進</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">Apache Kafka</span>
+                        <span class="tech-tag">AWS</span>
+                    </div>
+                </div>
+
+                <!-- LINEヤフー (Current) -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="company-name">LINEヤフー</h3>
+                        <span class="period" data-i18n="experience.line2025.period">2025年8月 - 2025年10月</span>
+                    </div>
+                    <p class="role" data-i18n="experience.line2025.role">バックエンド開発者</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.line2025.achievement1">LINEスタンプ、テーマ、絵文字のバックエンド開発</li>
+                    </ul>
+                </div>
+
+                <!-- LINEヤフー (2024) -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="company-name">LINEヤフー</h3>
+                        <span class="period" data-i18n="experience.line2024.period">2024年8月 (2週間)</span>
+                    </div>
+                    <p class="role" data-i18n="experience.line2024.role">ソフトウェアエンジニア インターン</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.line2024.achievement1">社内マーケターからのフィードバックに基づき広告管理ツールに新機能を実装</li>
+                        <li data-i18n="experience.line2024.achievement2">1on1ミーティングを通じてプロジェクトマネジメントとリーダーシップスキルを習得</li>
+                        <li data-i18n="experience.line2024.achievement3">スクラム開発環境でスプリントを完遂</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">Nuxt</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
+
+                <!-- Kotonoha AI -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="company-name">Kotonoha AI</h3>
+                        <span class="period" data-i18n="experience.kotonoha.period">2023年7月 - 2024年4月</span>
+                    </div>
+                    <p class="role" data-i18n="experience.kotonoha.role">共同創業者 | 営業・モバイルアプリ開発</p>
+                    <ul class="achievements">
+                        <li data-i18n="experience.kotonoha.achievement1">自動採点・添削ツールと英語添削アプリを開発・営業</li>
+                        <li data-i18n="experience.kotonoha.achievement2">主要5社および10校以上の学習塾との交渉を実施</li>
+                        <li data-i18n="experience.kotonoha.achievement3">約150人の中高生を対象に2か月間の授業導入を成功</li>
+                        <li data-i18n="experience.kotonoha.achievement4">モバイルアプリを開発・公開し、6か月で1,000件超のダウンロードと約100人の有料ユーザーを獲得</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">FlutterFlow</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Cloud Vision API</span>
+                        <span class="tech-tag">OpenAI API</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">GCP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+        <div class="container">
+            <h2 class="section-title" data-i18n="certifications.title">資格・認定</h2>
+            <div class="certifications-grid">
+                <div class="cert-category">
+                    <h3 class="cert-category-title" data-i18n="certifications.english.title">英語能力</h3>
+                    <div class="cert-item">
+                        <div class="cert-name">TOEIC Listening & Reading Test</div>
+                        <div class="cert-score">840</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name">iTEP Academic-Plus</div>
+                        <div class="cert-score">FFA Level 4.5</div>
+                    </div>
+                </div>
+                <div class="cert-category">
+                    <h3 class="cert-category-title" data-i18n="certifications.technical.title">技術資格</h3>
+                    <div class="cert-item">
+                        <div class="cert-name" data-i18n="certifications.technical.fundamental">基本情報技術者</div>
+                        <div class="cert-badge">✓</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-name" data-i18n="certifications.technical.applied">応用情報技術者</div>
+                        <div class="cert-badge">✓</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Keishi Irisa. <span data-i18n="footer.rights">All rights reserved.</span></p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/keishi-irisa/" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/KeishiIrisa" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./scripts/main.js"></script>
+</body>
+</html> 
