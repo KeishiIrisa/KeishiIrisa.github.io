@@ -629,25 +629,17 @@ function handleTerminalScroll() {
 // Reset terminal when language changes
 function resetTerminal() {
     if (isMobile) {
-        // Reset mobile section terminals
+        // Reset mobile section terminals and update language
         mobileTerminalShown = {};
         const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
         sections.forEach(sectionName => {
             const terminal = document.getElementById(`terminal-${sectionName}`);
-            const content = document.getElementById(`terminal-content-${sectionName}`);
             if (terminal) {
                 terminal.classList.remove('animated');
-                // Terminal stays visible in CSS
-            }
-            if (content) {
-                content.innerHTML = '';
+                // Update content for new language
+                updateTerminalLanguage(terminal, sectionName);
             }
         });
-        
-        // Re-trigger mobile terminal display based on current scroll position
-        // setTimeout(() => {
-        //     handleMobileSectionTerminalScroll();
-        // }, 300);
     } else {
         // Desktop terminal reset
         if (terminalContent) {
@@ -685,17 +677,14 @@ document.addEventListener('keydown', function(e) {
 
 // Mobile section terminal functions
 function initializeMobileSectionTerminals() {
-    // Initialize all mobile section terminals as visible but without commands
+    // Initialize all mobile section terminals with correct language content
     const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
     sections.forEach(sectionName => {
         const terminal = document.getElementById(`terminal-${sectionName}`);
-        const terminalContent = document.getElementById(`terminal-content-${sectionName}`);
         if (terminal) {
             terminal.classList.remove('animated');
-            // Terminal is visible by default in CSS
-        }
-        if (terminalContent) {
-            terminalContent.innerHTML = '';
+            // Update content for current language
+            updateTerminalLanguage(terminal, sectionName);
         }
     });
 }
@@ -751,68 +740,38 @@ function handleMobileSectionTerminalScroll() {
 }
 
 function animateMobileSectionTerminal(sectionName) {
-    if (isTyping) return;
-    
     const terminal = document.getElementById(`terminal-${sectionName}`);
-    const terminalContent = document.getElementById(`terminal-content-${sectionName}`);
     
-    if (!terminal || !terminalContent) return;
+    if (!terminal) return;
     
-    // Add animation class for subtle effect
+    // Simply add animation class to trigger CSS animations
     terminal.classList.add('animated');
     
-    // Remove animation class after animation completes
+    // Update text content for current language
+    updateTerminalLanguage(terminal, sectionName);
+    
+    // Remove animation class after all animations complete
     setTimeout(() => {
         terminal.classList.remove('animated');
-    }, 600);
-    
-    // Execute command for the section with hero animation
-    setTimeout(() => {
-        executeMobileSectionCommand(sectionName, terminalContent);
-    }, 200);
+    }, 5000); // Total animation duration
 }
 
-function executeMobileSectionCommand(sectionName, terminalContent) {
+// Update terminal content for current language without DOM manipulation
+function updateTerminalLanguage(terminal, sectionName) {
     const commandData = terminalCommands[currentLanguage][sectionName];
     if (!commandData) return;
     
-    isTyping = true;
+    // Update command text based on current language
+    const commandElement = terminal.querySelector('.terminal-command');
+    const outputElement = terminal.querySelector('.terminal-output');
     
-    // Create command line
-    const line = document.createElement('div');
-    line.className = 'terminal-line';
+    if (commandElement) {
+        commandElement.textContent = commandData.command;
+    }
     
-    const prompt = document.createElement('span');
-    prompt.className = 'terminal-prompt';
-    prompt.textContent = 'keishi@portfolio:~$ ';
-    
-    const command = document.createElement('span');
-    command.className = 'terminal-command';
-    
-    line.appendChild(prompt);
-    line.appendChild(command);
-    terminalContent.appendChild(line);
-    
-    // Type command text with animation
-    let i = 0;
-    const typeInterval = setInterval(() => {
-        if (i < commandData.command.length) {
-            command.textContent += commandData.command[i];
-            i++;
-        } else {
-            clearInterval(typeInterval);
-            
-            // Add output after command
-            setTimeout(() => {
-                const output = document.createElement('div');
-                output.className = 'terminal-output';
-                output.textContent = commandData.output;
-                terminalContent.appendChild(output);
-                
-                isTyping = false;
-            }, 500);
-        }
-    }, 80);
+    if (outputElement) {
+        outputElement.textContent = commandData.output;
+    }
 }
 
 function resetTerminalForDeviceChange() {
@@ -828,13 +787,10 @@ function resetTerminalForDeviceChange() {
     const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
     sections.forEach(sectionName => {
         const terminal = document.getElementById(`terminal-${sectionName}`);
-        const content = document.getElementById(`terminal-content-${sectionName}`);
         if (terminal) {
             terminal.classList.remove('animated');
-            // Terminal stays visible in CSS
-        }
-        if (content) {
-            content.innerHTML = '';
+            // Update content for current language
+            updateTerminalLanguage(terminal, sectionName);
         }
     });
     
