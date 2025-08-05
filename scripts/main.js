@@ -194,10 +194,19 @@ function setupEventListeners() {
             
             if (targetElement) {
                 const offsetTop = targetElement.offsetTop - 70;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                // Use different scroll behavior for mobile vs desktop
+                if (window.innerWidth <= 768) {
+                    // On mobile, use instant scroll to prevent conflicts
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'auto'
+                    });
+                } else {
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
@@ -209,10 +218,18 @@ function setupEventListeners() {
             const targetElement = document.querySelector('#about');
             if (targetElement) {
                 const offsetTop = targetElement.offsetTop - 70;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                // Use different scroll behavior for mobile vs desktop
+                if (window.innerWidth <= 768) {
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'auto'
+                    });
+                } else {
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     }
@@ -397,7 +414,11 @@ function initializeTerminal() {
                 executeCommand('hero');
             }, 1000);
         } else {
-            // Mobile: Initialize section terminals
+            // Mobile: Initialize section terminals and hide sticky terminal completely
+            if (stickyTerminal) {
+                stickyTerminal.style.display = 'none';
+                stickyTerminal.style.visibility = 'hidden';
+            }
             initializeMobileSectionTerminals();
         }
         
@@ -433,16 +454,13 @@ function showTerminal() {
 // Smooth scroll terminal to bottom
 function scrollTerminalToBottom() {
     // Only scroll on desktop (not mobile section terminals)
-    if (!isMobile && terminalContent) {
+    if (!isMobile && terminalContent && terminalContent.scrollHeight > terminalContent.clientHeight) {
         // Use requestAnimationFrame for better timing
         requestAnimationFrame(() => {
-            // Force scroll to bottom
-            terminalContent.scrollTop = terminalContent.scrollHeight;
-            
-            // Double-check with another frame
-            requestAnimationFrame(() => {
+            // Only scroll if there's actual content to scroll
+            if (terminalContent.scrollHeight > terminalContent.clientHeight) {
                 terminalContent.scrollTop = terminalContent.scrollHeight;
-            });
+            }
         });
     }
 }
@@ -487,8 +505,10 @@ function manageTerminalHeight() {
         }
     }
     
-    // Scroll to bottom after cleanup
-    scrollTerminalToBottom();
+    // Only scroll after cleanup if content was actually removed
+    if (terminalContent.children.length > 0) {
+        scrollTerminalToBottom();
+    }
 }
 
 // Execute terminal command with typing animation
@@ -532,19 +552,17 @@ function executeCommand(section) {
     // Check and manage terminal height after adding command line
     manageTerminalHeight();
     
-    // Initial scroll when command line is added
-    scrollTerminalToBottom();
-    
     // Type command text with animation
     let i = 0;
     const typeInterval = setInterval(() => {
         if (i < commandData.command.length) {
             command.textContent += commandData.command[i];
             i++;
-            // Scroll during typing
-            scrollTerminalToBottom();
+            // Only scroll at the end of typing, not during
         } else {
             clearInterval(typeInterval);
+            // Scroll once after typing is complete
+            scrollTerminalToBottom();
             
             // Add output after command
             setTimeout(() => {
@@ -568,10 +586,8 @@ function executeCommand(section) {
                 // Check and manage terminal height
                 manageTerminalHeight();
                 
-                // Multiple scroll attempts for reliability
+                // Single scroll attempt
                 scrollTerminalToBottom();
-                setTimeout(scrollTerminalToBottom, 100);
-                setTimeout(scrollTerminalToBottom, 300);
                 
                 isTyping = false;
             }, 500);
@@ -629,9 +645,9 @@ function resetTerminal() {
         });
         
         // Re-trigger mobile terminal display based on current scroll position
-        setTimeout(() => {
-            handleMobileSectionTerminalScroll();
-        }, 300);
+        // setTimeout(() => {
+        //     handleMobileSectionTerminalScroll();
+        // }, 300);
     } else {
         // Desktop terminal reset
         if (terminalContent) {
@@ -709,21 +725,29 @@ function handleMobileSectionTerminalScroll() {
                 const sectionHeight = section.offsetHeight;
                 
                 // If section is in viewport and hasn't been shown yet
-                if (scrollPosition >= sectionTop - windowHeight / 2 && 
-                    scrollPosition < sectionTop + sectionHeight - windowHeight / 2) {
-                    
+                // More conservative trigger - section must be more visible
+                const sectionCenter = sectionTop + sectionHeight / 2;
+                const viewportCenter = scrollPosition + windowHeight / 2;
+                
+                if (Math.abs(sectionCenter - viewportCenter) < windowHeight * 0.3) {
                     if (!mobileTerminalShown[sectionName]) {
                         mobileTerminalShown[sectionName] = true;
-                        // Use requestAnimationFrame to avoid blocking scroll
-                        requestAnimationFrame(() => {
-                            animateMobileSectionTerminal(sectionName);
-                        });
+                        // Longer delay to ensure scroll has completely settled
+                        setTimeout(() => {
+                            // Double-check that user isn't actively scrolling
+                            if (Math.abs(window.scrollY - scrollPosition) < 10) {
+                                animateMobileSectionTerminal(sectionName);
+                            } else {
+                                // User is still scrolling, reset flag
+                                mobileTerminalShown[sectionName] = false;
+                            }
+                        }, 200);
                     }
                     break;
                 }
             }
         }
-    }, 16); // ~60fps
+    }, 50); // Increase debounce time
 }
 
 function animateMobileSectionTerminal(sectionName) {
@@ -734,16 +758,8 @@ function animateMobileSectionTerminal(sectionName) {
     
     if (!terminal || !terminalContent) return;
     
-    // Store current scroll position before any DOM manipulation
-    const scrollY = window.scrollY;
-    
     // Add animation class for subtle effect
     terminal.classList.add('animated');
-    
-    // Restore scroll position immediately after DOM manipulation
-    if (window.scrollY !== scrollY) {
-        window.scrollTo(0, scrollY);
-    }
     
     // Remove animation class after animation completes
     setTimeout(() => {
@@ -762,9 +778,6 @@ function executeMobileSectionCommand(sectionName, terminalContent) {
     
     isTyping = true;
     
-    // Store scroll position before DOM manipulation
-    const initialScrollY = window.scrollY;
-    
     // Create command line
     const line = document.createElement('div');
     line.className = 'terminal-line';
@@ -780,11 +793,6 @@ function executeMobileSectionCommand(sectionName, terminalContent) {
     line.appendChild(command);
     terminalContent.appendChild(line);
     
-    // Restore scroll position after DOM manipulation
-    if (window.scrollY !== initialScrollY) {
-        window.scrollTo(0, initialScrollY);
-    }
-    
     // Type command text with animation
     let i = 0;
     const typeInterval = setInterval(() => {
@@ -796,17 +804,10 @@ function executeMobileSectionCommand(sectionName, terminalContent) {
             
             // Add output after command
             setTimeout(() => {
-                const currentScrollY = window.scrollY;
-                
                 const output = document.createElement('div');
                 output.className = 'terminal-output';
                 output.textContent = commandData.output;
                 terminalContent.appendChild(output);
-                
-                // Restore scroll position after output is added
-                if (window.scrollY !== currentScrollY) {
-                    window.scrollTo(0, currentScrollY);
-                }
                 
                 isTyping = false;
             }, 500);
@@ -859,8 +860,8 @@ function resetTerminalForDeviceChange() {
     lastExecutedCommand = '';
 }
 
-// Disable scroll restoration
-if ('scrollRestoration' in history) {
+// Disable scroll restoration only on desktop
+if ('scrollRestoration' in history && window.innerWidth > 768) {
     history.scrollRestoration = 'manual';
 }
 
