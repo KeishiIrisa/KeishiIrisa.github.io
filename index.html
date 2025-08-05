@@ -17,7 +17,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,6 +39,7 @@
             <div class="nav-menu" id="nav-menu">
                 <a href="#about" class="nav-link" data-i18n="nav.about">について</a>
                 <a href="#projects" class="nav-link" data-i18n="nav.projects">プロジェクト</a>
+                <a href="#research" class="nav-link" data-i18n="nav.research">研究</a>
                 <a href="#experience" class="nav-link" data-i18n="nav.experience">経験</a>
                 <a href="#certifications" class="nav-link" data-i18n="nav.certifications">資格</a>
                 <div class="language-switch">
@@ -59,25 +60,30 @@
     <section id="hero" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-image">
-                    <img src="./casual.jpg" alt="Keishi Irisa" class="profile-img">
+                <div class="hero-left">
+                    <div class="hero-image">
+                        <img src="./casual.jpg" alt="Keishi Irisa" class="profile-img">
+                    </div>
+                    <div class="hero-social">
+                        <a href="https://www.linkedin.com/in/keishi-irisa/" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/KeishiIrisa" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
                 </div>
-                <h1 class="hero-name">
-                    <span data-i18n="hero.name">入佐啓士</span>
-                    <span class="hero-name-en">Keishi Irisa</span>
-                </h1>
-                <p class="hero-title" data-i18n="hero.title">化学生命工学科学生</p>
-                <p class="hero-subtitle" data-i18n="hero.subtitle">東京大学工学部 3年</p>
-                <div class="hero-social">
-                    <a href="https://www.linkedin.com/in/keishi-irisa/" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://github.com/KeishiIrisa" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-                <div class="hero-cta">
-                    <a href="#about" class="cta-btn" data-i18n="hero.cta">詳しく見る</a>
+                <div class="hero-right">
+                    <div class="hero-info">
+                        <h1 class="hero-name">
+                            <span data-i18n="hero.name">入佐啓士</span>
+                        </h1>
+                        <p class="hero-title" data-i18n="hero.title">化学生命工学科学生</p>
+                        <p class="hero-subtitle" data-i18n="hero.subtitle">東京大学工学部 3年</p>
+                        <div class="hero-cta">
+                            <a href="#about" class="cta-btn" data-i18n="hero.cta">詳しく見る</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,6 +151,55 @@
         </div>
     </section>
 
+    <!-- Research Section -->
+    <section id="research" class="experience">
+        <div class="container">
+            <h2 class="section-title" data-i18n="research.title">研究活動</h2>
+            <div class="experience-timeline">
+                <!-- RIKEN BDR -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name" data-i18n="research.riken.organization">理化学研究所 生命機能科学研究センター</h3>
+                        </div>
+                        <span class="period" data-i18n="research.riken.period">2025年8月 - 現在</span>
+                    </div>
+                    <p class="role" data-i18n="research.riken.role">マルチモーダルAI基盤技術研究チーム</p>
+                    <ul class="achievements">
+                        <li data-i18n="research.riken.achievement1">タンパク質言語モデルの研究</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Transformers</span>
+                        <span class="tech-tag">Bioinformatics</span>
+                        <span class="tech-tag">Protein Language Models</span>
+                    </div>
+                </div>
+
+                <!-- Neurobiology Lab -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name" data-i18n="research.neuro.organization">神経細胞細胞生物学研究室</h3>
+                        </div>
+                        <span class="period" data-i18n="research.neuro.period">2025年7月 - 現在</span>
+                    </div>
+                    <p class="role" data-i18n="research.neuro.role">B3配属生</p>
+                    <ul class="achievements">
+                        <li data-i18n="research.neuro.achievement1">神経細胞セグメンテーションAIのオープンソース開発</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Sam2</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Cell Segmentation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Experience Section -->
     <section id="experience" class="experience">
         <div class="container">
@@ -155,7 +210,7 @@
                     <div class="experience-header">
                         <div class="company-info">
                             <img src="./assets/images/lineyahoo.png" alt="LY Corp." class="company-logo">
-                            <h3 class="company-name">LINEヤフー</h3>
+                            <h3 class="company-name" data-i18n="experience.line2025.company">LINEヤフー</h3>
                         </div>
                         <span class="period" data-i18n="experience.line2025.period">2025年8月 - 現在</span>
                     </div>
@@ -178,7 +233,7 @@
                     <div class="experience-header">
                         <div class="company-info">
                             <img src="./assets/images/emuni.png" alt="EMUNI" class="company-logo">
-                            <h3 class="company-name">EMUNI</h3>
+                            <h3 class="company-name" data-i18n="experience.emuni.company">EMUNI</h3>
                         </div>
                         <span class="period" data-i18n="experience.emuni.period">2025年1月 - 現在</span>
                     </div>
@@ -201,7 +256,7 @@
                     <div class="experience-header">
                         <div class="company-info">
                             <img src="./assets/images/cookpad.png" alt="Cookpad" class="company-logo">
-                            <h3 class="company-name">Cookpad</h3>
+                            <h3 class="company-name" data-i18n="experience.cookpad.company">Cookpad</h3>
                         </div>
                         <span class="period" data-i18n="experience.cookpad.period">2025年2月 - 2025年3月</span>
                     </div>
@@ -226,7 +281,7 @@
                     <div class="experience-header">
                         <div class="company-info">
                             <img src="./assets/images/lineyahoo.png" alt="LY Corp." class="company-logo">
-                            <h3 class="company-name">LINEヤフー</h3>
+                            <h3 class="company-name" data-i18n="experience.line2024.company">LINEヤフー</h3>
                         </div>
                         <span class="period" data-i18n="experience.line2024.period">2024年8月</span>
                     </div>
@@ -248,7 +303,7 @@
                     <div class="experience-header">
                         <div class="company-info">
                             <img src="./assets/images/kotonoha.png" alt="Kotonoha AI" class="company-logo">
-                            <h3 class="company-name">Kotonoha AI</h3>
+                            <h3 class="company-name" data-i18n="experience.kotonoha.company">Kotonoha AI</h3>
                         </div>
                         <span class="period" data-i18n="experience.kotonoha.period">2023年7月 - 2024年4月</span>
                     </div>
@@ -319,6 +374,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- Sticky Terminal -->
+    <div class="sticky-terminal" id="sticky-terminal">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">keishi@portfolio:~$</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-content" id="terminal-content">
+                    <!-- Content will be dynamically generated -->
+                </div>
+                <div class="terminal-cursor" id="terminal-cursor">_</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="./scripts/main.js"></script>
