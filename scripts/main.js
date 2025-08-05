@@ -340,14 +340,31 @@ let currentSection = '';
 let terminalLines = []; // Track all terminal lines for height management
 let maxTerminalHeight = 300; // Will be updated based on screen size
 let lastExecutedCommand = ''; // Track last command to prevent duplicates
-let isTerminalMinimized = false; // Track terminal minimization state
 let isMobile = false; // Track if device is mobile
 let mobileTerminalShown = {}; // Track which sections have shown on mobile
-let mobileTerminalTimeout = null; // Timeout for mobile terminal fade out
+let currentScrollHandler = null; // Track current scroll handler
 
 // Check if device is mobile
 function checkIfMobile() {
     return window.innerWidth <= 768;
+}
+
+// Setup scroll handler based on device type
+function setupScrollHandler() {
+    // Remove existing scroll handler if any
+    if (currentScrollHandler) {
+        window.removeEventListener('scroll', currentScrollHandler);
+        currentScrollHandler = null;
+    }
+    
+    // Add appropriate scroll handler
+    if (isMobile) {
+        currentScrollHandler = handleMobileSectionTerminalScroll;
+        window.addEventListener('scroll', handleMobileSectionTerminalScroll);
+    } else {
+        currentScrollHandler = handleTerminalScroll;
+        window.addEventListener('scroll', handleTerminalScroll);
+    }
 }
 
 // Update max terminal height based on screen size
@@ -379,13 +396,13 @@ function initializeTerminal() {
                 showTerminal();
                 executeCommand('hero');
             }, 1000);
-            
-            window.addEventListener('scroll', handleTerminalScroll);
         } else {
-            // Mobile: Hide terminal initially, show on section reach
-            stickyTerminal.style.display = 'none';
-            window.addEventListener('scroll', handleMobileTerminalScroll);
+            // Mobile: Initialize section terminals
+            initializeMobileSectionTerminals();
         }
+        
+        // Setup appropriate scroll handler
+        setupScrollHandler();
         
         // Update height on window resize and manage terminal content
         window.addEventListener('resize', () => {
@@ -395,6 +412,7 @@ function initializeTerminal() {
             // If switching between mobile and desktop
             if (wasMobile !== isMobile) {
                 resetTerminalForDeviceChange();
+                setupScrollHandler(); // Reset scroll handler for new device type
             }
             
             updateMaxTerminalHeight();
@@ -414,7 +432,8 @@ function showTerminal() {
 
 // Smooth scroll terminal to bottom
 function scrollTerminalToBottom() {
-    if (terminalContent) {
+    // Only scroll on desktop (not mobile section terminals)
+    if (!isMobile && terminalContent) {
         // Use requestAnimationFrame for better timing
         requestAnimationFrame(() => {
             // Force scroll to bottom
@@ -430,7 +449,8 @@ function scrollTerminalToBottom() {
 
 // Manage terminal height by removing oldest commands when limit is reached
 function manageTerminalHeight() {
-    if (!terminalContent) return;
+    // Only manage height on desktop
+    if (isMobile || !terminalContent) return;
     
     const terminalBody = terminalContent.parentElement;
     if (!terminalBody) return;
@@ -473,7 +493,8 @@ function manageTerminalHeight() {
 
 // Execute terminal command with typing animation
 function executeCommand(section) {
-    if (isTyping) return;
+    // Only execute on desktop (mobile uses section terminals)
+    if (isMobile || isTyping) return;
     
     const commandData = terminalCommands[currentLanguage][section];
     if (!commandData) return;
@@ -560,6 +581,9 @@ function executeCommand(section) {
 
 // Handle scroll-based terminal commands
 function handleTerminalScroll() {
+    // Only handle scroll on desktop
+    if (isMobile) return;
+    
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     
@@ -588,23 +612,46 @@ function handleTerminalScroll() {
 
 // Reset terminal when language changes
 function resetTerminal() {
-    if (terminalContent) {
-        terminalContent.innerHTML = '';
-        commandHistory = [];
-        currentSection = '';
-        isTyping = false;
-        terminalLines = []; // Reset terminal lines array
-        lastExecutedCommand = ''; // Reset last executed command
+    if (isMobile) {
+        // Reset mobile section terminals
+        mobileTerminalShown = {};
+        const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
+        sections.forEach(sectionName => {
+            const terminal = document.getElementById(`terminal-${sectionName}`);
+            const content = document.getElementById(`terminal-content-${sectionName}`);
+            if (terminal) {
+                terminal.classList.remove('animated');
+                // Terminal stays visible in CSS
+            }
+            if (content) {
+                content.innerHTML = '';
+            }
+        });
         
-        // Re-execute current section command
+        // Re-trigger mobile terminal display based on current scroll position
         setTimeout(() => {
-            executeCommand('hero');
-            
-            // Re-execute based on current scroll position
-            setTimeout(() => {
-                handleTerminalScroll();
-            }, 1500);
+            handleMobileSectionTerminalScroll();
         }, 300);
+    } else {
+        // Desktop terminal reset
+        if (terminalContent) {
+            terminalContent.innerHTML = '';
+            commandHistory = [];
+            currentSection = '';
+            isTyping = false;
+            terminalLines = []; // Reset terminal lines array
+            lastExecutedCommand = ''; // Reset last executed command
+            
+            // Re-execute current section command
+            setTimeout(() => {
+                executeCommand('hero');
+                
+                // Re-execute based on current scroll position
+                setTimeout(() => {
+                    handleTerminalScroll();
+                }, 1500);
+            }, 300);
+        }
     }
 }
 
@@ -620,63 +667,103 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Mobile terminal functions
-function handleMobileTerminalScroll() {
-    const scrollPosition = window.scrollY;
-    const windowHeight = window.innerHeight;
+// Mobile section terminal functions
+function initializeMobileSectionTerminals() {
+    // Initialize all mobile section terminals as visible but without commands
+    const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
+    sections.forEach(sectionName => {
+        const terminal = document.getElementById(`terminal-${sectionName}`);
+        const terminalContent = document.getElementById(`terminal-content-${sectionName}`);
+        if (terminal) {
+            terminal.classList.remove('animated');
+            // Terminal is visible by default in CSS
+        }
+        if (terminalContent) {
+            terminalContent.innerHTML = '';
+        }
+    });
+}
+
+let scrollTimeout = null;
+
+function handleMobileSectionTerminalScroll() {
+    // Only handle scroll on mobile
+    if (!isMobile) return;
     
-    // Check which section is currently visible
-    const sections = ['hero', 'about', 'projects', 'research', 'experience', 'certifications'];
+    // Debounce scroll handling to prevent excessive DOM queries
+    if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+    }
     
-    for (const sectionName of sections) {
-        const section = document.getElementById(sectionName);
-        if (section) {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            
-            // If section is in viewport and hasn't been shown yet
-            if (scrollPosition >= sectionTop - windowHeight / 2 && 
-                scrollPosition < sectionTop + sectionHeight - windowHeight / 2) {
+    scrollTimeout = setTimeout(() => {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        // Check which section is currently visible
+        const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
+        
+        for (const sectionName of sections) {
+            const section = document.getElementById(sectionName);
+            if (section) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
                 
-                if (!mobileTerminalShown[sectionName]) {
-                    mobileTerminalShown[sectionName] = true;
-                    showMobileTerminal(sectionName);
+                // If section is in viewport and hasn't been shown yet
+                if (scrollPosition >= sectionTop - windowHeight / 2 && 
+                    scrollPosition < sectionTop + sectionHeight - windowHeight / 2) {
+                    
+                    if (!mobileTerminalShown[sectionName]) {
+                        mobileTerminalShown[sectionName] = true;
+                        // Use requestAnimationFrame to avoid blocking scroll
+                        requestAnimationFrame(() => {
+                            animateMobileSectionTerminal(sectionName);
+                        });
+                    }
+                    break;
                 }
-                break;
             }
         }
-    }
+    }, 16); // ~60fps
 }
 
-function showMobileTerminal(sectionName) {
+function animateMobileSectionTerminal(sectionName) {
     if (isTyping) return;
     
-    // Clear any existing timeout
-    if (mobileTerminalTimeout) {
-        clearTimeout(mobileTerminalTimeout);
+    const terminal = document.getElementById(`terminal-${sectionName}`);
+    const terminalContent = document.getElementById(`terminal-content-${sectionName}`);
+    
+    if (!terminal || !terminalContent) return;
+    
+    // Store current scroll position before any DOM manipulation
+    const scrollY = window.scrollY;
+    
+    // Add animation class for subtle effect
+    terminal.classList.add('animated');
+    
+    // Restore scroll position immediately after DOM manipulation
+    if (window.scrollY !== scrollY) {
+        window.scrollTo(0, scrollY);
     }
     
-    // Clear terminal content
-    if (terminalContent) {
-        terminalContent.innerHTML = '';
-    }
-    
-    // Show terminal from bottom
-    stickyTerminal.style.display = 'block';
-    stickyTerminal.classList.remove('mobile-fade-out');
-    stickyTerminal.classList.add('mobile-slide-up');
-    
-    // Execute single command for the section
+    // Remove animation class after animation completes
     setTimeout(() => {
-        executeMobileCommand(sectionName);
-    }, 300);
+        terminal.classList.remove('animated');
+    }, 600);
+    
+    // Execute command for the section with hero animation
+    setTimeout(() => {
+        executeMobileSectionCommand(sectionName, terminalContent);
+    }, 200);
 }
 
-function executeMobileCommand(sectionName) {
+function executeMobileSectionCommand(sectionName, terminalContent) {
     const commandData = terminalCommands[currentLanguage][sectionName];
     if (!commandData) return;
     
     isTyping = true;
+    
+    // Store scroll position before DOM manipulation
+    const initialScrollY = window.scrollY;
     
     // Create command line
     const line = document.createElement('div');
@@ -693,6 +780,11 @@ function executeMobileCommand(sectionName) {
     line.appendChild(command);
     terminalContent.appendChild(line);
     
+    // Restore scroll position after DOM manipulation
+    if (window.scrollY !== initialScrollY) {
+        window.scrollTo(0, initialScrollY);
+    }
+    
     // Type command text with animation
     let i = 0;
     const typeInterval = setInterval(() => {
@@ -704,59 +796,59 @@ function executeMobileCommand(sectionName) {
             
             // Add output after command
             setTimeout(() => {
+                const currentScrollY = window.scrollY;
+                
                 const output = document.createElement('div');
                 output.className = 'terminal-output';
                 output.textContent = commandData.output;
                 terminalContent.appendChild(output);
                 
+                // Restore scroll position after output is added
+                if (window.scrollY !== currentScrollY) {
+                    window.scrollTo(0, currentScrollY);
+                }
+                
                 isTyping = false;
-                
-                // Set timeout to fade out
-                mobileTerminalTimeout = setTimeout(() => {
-                    hideMobileTerminal();
-                }, 3000); // Show for 3 seconds
-                
             }, 500);
         }
     }, 80);
-}
-
-function hideMobileTerminal() {
-    if (stickyTerminal) {
-        stickyTerminal.classList.remove('mobile-slide-up');
-        stickyTerminal.classList.add('mobile-fade-out');
-        
-        setTimeout(() => {
-            stickyTerminal.style.display = 'none';
-            stickyTerminal.classList.remove('mobile-fade-out');
-        }, 500);
-    }
 }
 
 function resetTerminalForDeviceChange() {
     // Reset mobile tracking
     mobileTerminalShown = {};
     
-    if (mobileTerminalTimeout) {
-        clearTimeout(mobileTerminalTimeout);
-        mobileTerminalTimeout = null;
-    }
-    
     // Reset terminal state
     if (terminalContent) {
         terminalContent.innerHTML = '';
     }
     
+    // Reset mobile section terminals
+    const sections = ['about', 'projects', 'research', 'experience', 'certifications'];
+    sections.forEach(sectionName => {
+        const terminal = document.getElementById(`terminal-${sectionName}`);
+        const content = document.getElementById(`terminal-content-${sectionName}`);
+        if (terminal) {
+            terminal.classList.remove('animated');
+            // Terminal stays visible in CSS
+        }
+        if (content) {
+            content.innerHTML = '';
+        }
+    });
+    
     if (stickyTerminal) {
         stickyTerminal.className = 'sticky-terminal';
-        stickyTerminal.style.display = isMobile ? 'none' : 'block';
         
         if (!isMobile) {
             // Reinitialize for desktop
+            stickyTerminal.style.display = 'block';
             setTimeout(() => {
                 showTerminal();
                 executeCommand('hero');
             }, 500);
+        } else {
+            initializeMobileSectionTerminals();
         }
     }
     
@@ -765,6 +857,11 @@ function resetTerminalForDeviceChange() {
     isTyping = false;
     terminalLines = [];
     lastExecutedCommand = '';
+}
+
+// Disable scroll restoration
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
 }
 
 // Initialize terminal on page load
