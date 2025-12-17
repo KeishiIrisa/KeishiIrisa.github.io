@@ -25,10 +25,6 @@ const translations = {
         'research.riken.period': '2025年8月 - 現在',
         'research.riken.role': 'マルチモーダルAI基盤技術研究チーム',
         'research.riken.achievement1': 'タンパク質言語モデルの研究',
-        'research.neuro.organization': '神経細胞細胞生物学研究室',
-        'research.neuro.period': '2025年7月 - 現在',
-        'research.neuro.role': 'B3配属生',
-        'research.neuro.achievement1': '神経細胞セグメンテーションAIのオープンソース開発',
         'experience.title': 'インターンシップ経験',
         'experience.line2025.company': 'LINEヤフー',
         'experience.emuni.company': 'EMUNI',
@@ -79,10 +75,6 @@ const translations = {
         'research.riken.period': 'August 2025 - Present',
         'research.riken.role': 'Multimodal AI Foundation Technology Research Team',
         'research.riken.achievement1': 'Research and development of protein language models',
-        'research.neuro.organization': 'Neurobiology Laboratory',
-        'research.neuro.period': 'July 2025 - Present',
-        'research.neuro.role': 'B3 Student',
-        'research.neuro.achievement1': 'Open source development of neural cell segmentation AI',
         'experience.title': 'Internship Experience',
         'experience.line2025.company': 'LY Corporation',
         'experience.line2025.period': 'August 2025 - Present',
@@ -309,7 +301,7 @@ const terminalCommands = {
         },
         'research': {
             command: 'ls research/',
-            output: 'RIKEN-BDR/\nNeurobiology-Lab/'
+            output: 'RIKEN-BDR/'
         },
         'experience': {
             command: 'ls experience/',
@@ -335,7 +327,7 @@ const terminalCommands = {
         },
         'research': {
             command: 'ls research/',
-            output: 'RIKEN-BDR/\nNeurobiology-Lab/'
+            output: 'RIKEN-BDR/'
         },
         'experience': {
             command: 'ls experience/',
